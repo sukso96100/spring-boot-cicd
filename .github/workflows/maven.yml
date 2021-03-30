@@ -21,6 +21,10 @@ jobs:
       with:
         java-version: 1.8
     - name: Install dependencies
-      run: mvn install
+      run: mvn install  -DskipTests
     - name: Compile
       run: mvn compile
+    - name: Scan with PMD
+      run: mvn pmd:check
+    - name: Scan with SpotBugs
+      run: mvn spotbugs:check
