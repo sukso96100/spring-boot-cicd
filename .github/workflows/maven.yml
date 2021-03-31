@@ -28,3 +28,5 @@ jobs:
       run: mvn pmd:check
     - name: Scan with SpotBugs
       run: mvn spotbugs:check
+    - name: Check code style with Checkstyle
+      run: mvn checkstyle:check
