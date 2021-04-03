@@ -20,14 +20,17 @@ jobs:
         java-version: 1.8
     - name: Install dependencies
       run: mvn install  -DskipTests
-    - name: Compile
-      run: mvn compile
-    - name: Scan with PMD
-      run: mvn pmd:check
-    - name: Scan with SpotBugs
-      run: mvn spotbugs:check
     - name: Check code style with Checkstyle
       run: mvn checkstyle:check
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v1
+      with:
+        languages: java
+    - name: Autobuild
+      uses: github/codeql-action/autobuild@v1
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v1
+    
   test:
     runs-on: ubuntu-latest
     strategy:
