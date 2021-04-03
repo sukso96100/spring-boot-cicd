@@ -18,10 +18,6 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
-    - name: Install dependencies
-      run: mvn install  -DskipTests
-    - name: Check code style with Checkstyle
-      run: mvn checkstyle:check
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v1
       with:
@@ -30,6 +26,12 @@ jobs:
       uses: github/codeql-action/autobuild@v1
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
+    - name: Lint Code Base
+      uses: github/super-linter@v3
+      env:
+        VALIDATE_ALL_CODEBASE: false
+        DEFAULT_BRANCH: master
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
   test:
     runs-on: ubuntu-latest
