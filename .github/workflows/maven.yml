@@ -48,3 +48,7 @@ jobs:
       run: mvn compile
     - name: Run tests and measure code coverage
       run: mvn verify
+    - name: Run codacy-coverage-reporter
+      uses: codacy/codacy-coverage-reporter-action@master
+      with:
+        project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
