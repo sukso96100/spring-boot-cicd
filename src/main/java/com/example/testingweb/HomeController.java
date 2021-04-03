@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class HomeController {
 	@RequestMapping("/")
 	public @ResponseBody String greeting() {
+		String unused = null;
+		if(unused.equals("unused")){
+			return "world";
+		}
 		return "Hello, World";
 	}
 
