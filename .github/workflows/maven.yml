@@ -22,14 +22,13 @@ jobs:
       uses: github/codeql-action/autobuild@v1
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
-    - name: Lint Code Base
-      uses: github/super-linter@v3
-      env:
-        VALIDATE_ALL_CODEBASE: true
-        DEFAULT_BRANCH: main
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        LINTER_RULES_PATH: /
-        JAVA_FILE_NAME: checkstyle.xml
+    - name: Run Codacy Analysis CLI
+      uses: codacy/codacy-analysis-cli-action@master
+      with:
+        tool: spotbugs
+        project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+        upload: true
+        max-allowed-issues: 2147483647
     
   test:
     runs-on: ubuntu-latest
