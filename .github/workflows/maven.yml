@@ -10,7 +10,20 @@ on:
     branches: [ main ]
 
 jobs:
-  scan:
+  codeql:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v1
+      with:
+        languages: java
+    - name: Autobuild
+      uses: github/codeql-action/autobuild@v1
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v1
+
+  codacy:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -21,15 +34,7 @@ jobs:
         project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
         upload: true
         max-allowed-issues: 2147483647
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v1
-      with:
-        languages: java
-    - name: Autobuild
-      uses: github/codeql-action/autobuild@v1
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v1
-    
+
   test:
     runs-on: ubuntu-latest
     steps:
