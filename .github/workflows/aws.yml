@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
 
-name: Deploy to Amazon ECS
+name: Push to AWS ECR
 
 jobs:
   deploy:
