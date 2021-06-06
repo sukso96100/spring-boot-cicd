@@ -50,5 +50,18 @@ jobs:
         sudo apt update -yq && sudo apt install -yq jq
         jq -c '.Image.Name = "test"' Dockerrun.aws.json > "$IMAGE_TAG-Dockerrun.aws.json"
         echo "::set-output name=dockerrun::$IMAGE_TAG-Dockerrun.aws.json"
+    
+    - name: Deploy to AWS Beanstalk
+      id: deploy-beanstalk
+      env:
+        DOCKERRUN: ${{ steps.gen-dockerrun.outputs.dockerrun }}
+        S3_BUCKET: elasticbeanstalk-ap-northeast-2-364282015016
+        AWS_REGION: ap-northeast-2
+        APP_NAME: springboot
+        APP_VERSION: ${{ github.sha }}
+      run: |
+        aws s3 cp --region $AWS_REGION ./$DOCKERRUN s3://$S3_BUCKET/$DOCKERRUN
+        aws elasticbeanstalk create-application-version --application-name $APP_NAME --version-label $APP_VERSION \
+          --source-bundle S3Bucket="$S3_BUCKET",S3Key="$DOCKERRUN" --auto-create-application
 
    
