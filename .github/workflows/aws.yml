@@ -48,7 +48,7 @@ jobs:
         IMAGE_NAME: ${{ steps.build-image.outputs.image }}
       run: |
         sudo apt update -yq && sudo apt install -yq jq
-        jq -c '.Image.Name = "test"' Dockerrun.aws.json > "$IMAGE_TAG-Dockerrun.aws.json"
+        jq -c '.Image.Name = "$IMAGE_NAME"' Dockerrun.aws.json > "$IMAGE_TAG-Dockerrun.aws.json"
         echo "::set-output name=dockerrun::$IMAGE_TAG-Dockerrun.aws.json"
     
     - name: Deploy to AWS Beanstalk
