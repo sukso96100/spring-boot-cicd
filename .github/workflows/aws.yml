@@ -47,7 +47,7 @@ jobs:
         IMAGE_TAG: ${{ github.sha }}
         IMAGE_NAME: ${{ steps.build-image.outputs.image }}
       run: |
-        apt update -yq && apt install -yq jq
+        sudo apt update -yq && sudo apt install -yq jq
         jq -c '.Image.Name = "test"' Dockerrun.aws.json > "$IMAGE_TAG-Dockerrun.aws.json"
         echo "::set-output name=dockerrun::$IMAGE_TAG-Dockerrun.aws.json"
 
